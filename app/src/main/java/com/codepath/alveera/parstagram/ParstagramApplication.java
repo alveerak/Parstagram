@@ -2,6 +2,7 @@ package com.codepath.alveera.parstagram;
 
 import android.app.Application;
 
+import com.codepath.alveera.parstagram.model.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -12,6 +13,8 @@ public class ParstagramApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        ParseObject.registerSubclass(Post.class);
 
         // Use for troubleshooting -- remove this line for production
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
@@ -32,10 +35,5 @@ public class ParstagramApplication extends Application {
                 .clientKey(null)  // set explicitly unless clientKey is explicitly configured on Parse server
                 .clientBuilder(builder)
                 .server("http://alveera-parstagram.herokuapp.com/parse").build());
-
-        // New test creation of object below
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
     }
 }
