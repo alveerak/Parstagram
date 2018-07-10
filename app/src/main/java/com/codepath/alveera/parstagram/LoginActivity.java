@@ -32,6 +32,13 @@ public class LoginActivity extends AppCompatActivity {
         tvPassword = (EditText) findViewById(R.id.tvPassword);
         bLogin = (Button) findViewById(R.id.bLogin);
         bSignup = (Button) findViewById(R.id.bSignup);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            Intent i = new Intent(LoginActivity.this, InstaActivity.class);
+            startActivity(i);
+            Toast.makeText(LoginActivity.this, "Automatically logged in!", Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override

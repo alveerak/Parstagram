@@ -28,6 +28,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 ParseUser.logOut();
                 ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+                // go back to log in screen
             }
         });
     }
