@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +20,8 @@
             android:layout_alignParentStart="true"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text=""
+            android:hint="Add a description..."/>
 
         <Button
             android:id="@+id/create_btn"
@@ -36,6 +38,23 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/create_btn"
             android:text="Refresh" />
+
+        <Button
+            android:id="@+id/cam_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="take pic" />
+
+        <ImageView
+            android:id="@+id/ivPreview"
+            android:layout_width="153dp"
+            android:layout_height="156dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/refresh_btn"
+            android:src="@android:color/holo_blue_bright" />
+
     </RelativeLayout>
 
 </FrameLayout>

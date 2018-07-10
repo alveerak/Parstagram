@@ -1,10 +1,14 @@
 package com.codepath.alveera.parstagram.model;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +65,25 @@ public class Post extends ParseObject{
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public static Post newInstance(ParseUser author, ParseFile image, String description) {
+        Post post = new Post();
+        post.setImage(image);
+        post.setDescription(description);
+        post.setUser(author);
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("HomeActivity", "Create post success");
+                }
+                else {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return post;
     }
 
     public static class Query extends ParseQuery<Post>{

@@ -13,7 +13,7 @@ public class InstaActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     Fragment currentFragment = null;
-    FragmentTransaction ft;
+    private FragmentTransaction ft;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,7 +40,6 @@ public class InstaActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
                     currentFragment = new ProfileFragment();
-                    System.out.println("profile page here");
                     ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.my_fragment, currentFragment);
                     ft.commit();
@@ -67,6 +66,8 @@ public class InstaActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+
 
 //    public void loadTopPosts() {
 //        final Post.Query postsQuery = new Post.Query();
