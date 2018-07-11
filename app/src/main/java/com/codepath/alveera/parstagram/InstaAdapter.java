@@ -26,11 +26,9 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> {
 
     private List<Post> mTweets;
-    private final Handler handler;
     Context context;
     // pass in the Tweets array in the constructor
-    public InstaAdapter(List<Post> tweets, Handler h) {
-        handler = h;
+    public InstaAdapter(List<Post> tweets) {
         mTweets = tweets;
     }
 
@@ -190,7 +188,7 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
                 // show the activity
                 //context.startActivity(intent);
 //                context.startActivityForResult();
-                handler.onClick(tweet, context);
+                //handler.onClick(tweet, context);
             }
         }
 
