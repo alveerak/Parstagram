@@ -4,15 +4,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.codepath.alveera.parstagram.model.Post;
+
 public class InstaActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
-    Fragment currentFragment = null;
+    //Fragment currentFragment = null;
+    HomeFragment homeFrag;
+    ProfileFragment profFrag;
+    PicFragment picFrag;
+    Fragment frag;
+
     private FragmentTransaction ft;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -22,9 +30,9 @@ public class InstaActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    currentFragment = new HomeFragment();
+                    frag = homeFrag;
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.my_fragment, currentFragment);
+                    ft.replace(R.id.my_fragment, frag);
                     ft.commit();
 
                     //FragmentManager manager = getSupportFragmentManager();
@@ -32,16 +40,16 @@ public class InstaActivity extends AppCompatActivity {
                     // mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
-                    currentFragment = new PicFragment();
+                    frag = picFrag;
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.my_fragment, currentFragment);
+                    ft.replace(R.id.my_fragment, frag);
                     ft.commit();
                     //mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
-                    currentFragment = new ProfileFragment();
+                    frag = profFrag;
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.my_fragment, currentFragment);
+                    ft.replace(R.id.my_fragment, frag);
                     ft.commit();
                     //mTextMessage.setText(R.string.title_notifications);
                     return true;
@@ -56,45 +64,27 @@ public class InstaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_insta);
 
         ft = getSupportFragmentManager().beginTransaction();
-        currentFragment = new HomeFragment();
-        ft.replace(R.id.my_fragment, currentFragment);
-        ft.commit();
 
-        //loadTopPosts();
+        homeFrag = new HomeFragment();
+        profFrag = new ProfileFragment();
+        picFrag = new PicFragment();
+        frag = homeFrag;
+        ft.replace(R.id.my_fragment, frag);
+        ft.commit();
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-
-
-//    public void loadTopPosts() {
-//        final Post.Query postsQuery = new Post.Query();
-//        postsQuery.getTop().withUser();
-//
-//
-//        postsQuery.getQuery(Post.class).findInBackground(new FindCallback<Post>() {
-//
-//            @Override
-//            public void done(List<Post> objects, ParseException e) {
-//                if (e == null) {
-//                    for (int i = 0; i < objects.size(); ++i) {
-//                        ParseUser p = objects.get(i).getUser();
-//                        try {
-//                            Log.d("InstaActivity", "Pose[" + i + "] = " +
-//                                    objects.get(i).getDescription() +
-//                                    "\nusername = " + objects.get(i).getUser().fetchIfNeeded().getUsername());
-//                        } catch (ParseException e1) {
-//                            e1.printStackTrace();
-//                        }
-//
-//                    }
-//                }else {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
+    public void goToDetails(Post post){
+                Fragment fragment = new PostDetailsFragment();
+                //bundle
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.my_fragment, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+    }
 
 }

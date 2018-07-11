@@ -1,5 +1,6 @@
 package com.codepath.alveera.parstagram.model;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.parse.ParseClassName;
@@ -10,14 +11,12 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 @ParseClassName("Post")
 public class Post extends ParseObject{
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
+    private static final String KEY_TIME = "createdAt";
     // list out the attributes
     public String body;
     public long uid; // database ID for the tweet
@@ -26,22 +25,6 @@ public class Post extends ParseObject{
     public String handle;
     public String retweet_count;
     public String favorites_count;
-
-
-    // deserialize the JSON
-    public static Post fromJSON(JSONObject jsonObject) throws JSONException {
-        Post tweet = new Post();
-
-        // extract the values from JSON
-        tweet.body = jsonObject.getString("text");
-        tweet.uid = jsonObject.getLong("id");
-        tweet.createdAt = jsonObject.getString("created_at");
-        tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
-        tweet.handle = tweet.user.screenName;
-        //tweet.retweet_count = jsonObject.getString("retweet_count");
-        //tweet.favorites_count = jsonObject.getString("favorite_count");
-        return tweet;
-    }
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -65,6 +48,12 @@ public class Post extends ParseObject{
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public String getRelativeTimeAgo() {
+        long dateMillis = getCreatedAt().getTime();
+        String relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        return relativeDate;
     }
 
     public static Post newInstance(ParseUser author, ParseFile image, String description) {

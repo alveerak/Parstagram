@@ -55,6 +55,7 @@ public class PicFragment extends Fragment {
         createButton = (Button) view.findViewById(R.id.create_btn);
         camButton = (Button) view.findViewById(R.id.cam_btn);
         ivPreview = (ImageView) view.findViewById(R.id.ivPreview);
+        camButton.setVisibility(View.VISIBLE);
 
         posts = new ArrayList<>();
         pAdapter = new InstaAdapter(posts);
@@ -164,6 +165,7 @@ public class PicFragment extends Fragment {
         createButton.setVisibility(View.INVISIBLE);
         Toast.makeText(getContext(), "POSTED SUCCESSFULLY!", Toast.LENGTH_LONG).show();
 
+        //pAdapter.notifyItemInserted(0);
         pAdapter.notifyItemInserted(posts.size() - 1);
     }
 

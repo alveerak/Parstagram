@@ -22,8 +22,8 @@
     <FrameLayout
         android:id="@+id/my_fragment"
         android:name="com.codepath.alveera.parstagram.HomeFragment"
-        android:layout_width="0dp"
-        android:layout_height="450dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
