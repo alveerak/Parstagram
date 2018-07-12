@@ -52,8 +52,7 @@ public class Post extends ParseObject{
 
     public String getRelativeTimeAgo() {
         long dateMillis = getCreatedAt().getTime();
-        String relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-        return relativeDate;
+        return DateUtils.getRelativeTimeSpanString(dateMillis, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
     }
 
     public static Post newInstance(ParseUser author, ParseFile image, String description) {

@@ -79,12 +79,21 @@ public class InstaActivity extends AppCompatActivity {
 
     public void goToDetails(Post post){
                 Fragment fragment = new PostDetailsFragment();
-                //bundle
+                Bundle args = new Bundle();
+                args.putString("id", post.getObjectId());
+                fragment.setArguments(args);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.my_fragment, fragment);
-                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+    }
+
+    public void goBackToFeed() {
+        Fragment fragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.my_fragment, fragment);
+        fragmentTransaction.commit();
     }
 
 }
