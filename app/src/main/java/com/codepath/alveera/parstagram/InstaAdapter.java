@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.alveera.parstagram.model.GlideApp;
 import com.codepath.alveera.parstagram.model.Post;
@@ -194,7 +193,6 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
                 // serialize the movie using parceler, use its short name as a key
                 //intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
                 // show the activity
-                Toast.makeText(context, "reached here", Toast.LENGTH_LONG).show();
                 ((InstaActivity) context).goToDetails(post);
                 //context.startActivity(intent);
                 //context.startActivityForResult();

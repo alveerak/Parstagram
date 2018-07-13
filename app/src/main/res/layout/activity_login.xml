@@ -54,6 +54,7 @@
         android:background="#15fffefe"
         android:capitalize="none"
         android:text="Don't have an account? Sign up."
+        android:foreground="?android:attr/selectableItemBackground"
         android:textColor="#95fffefe"
         android:textSize="14sp"
         tools:textAllCaps="false" />
@@ -67,6 +68,7 @@
         android:background="@drawable/button_border"
         android:capitalize="none"
         android:text="Log In"
+        android:foreground="?android:attr/selectableItemBackground"
         android:textColor="#45fffefe"
         android:textSize="14sp"
         tools:textAllCaps="false" />

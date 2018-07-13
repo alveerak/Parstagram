@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ivFavorite"
+        android:layout_marginTop="10dp"
         android:text="TextView"
         android:textSize="20sp" />
 
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvDescription"
+        android:layout_marginTop="3dp"
         android:text="TextView" />
 
     <TextView
@@ -52,22 +54,26 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
         app:srcCompat="@drawable/instagram_user_outline_24" />
 
     <ImageView
         android:id="@+id/ivFavorite"
-        android:layout_width="29dp"
+        android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ivPic"
+        android:layout_marginTop="9dp"
         app:srcCompat="@drawable/ufi_heart" />
 
     <ImageView
         android:id="@+id/ivComment"
-        android:layout_width="30dp"
-        android:layout_height="33dp"
+        android:layout_width="41dp"
+        android:layout_height="42dp"
         android:layout_below="@+id/ivPic"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivFavorite"
+        android:paddingTop="10dp"
         app:srcCompat="@drawable/ufi_comment" />
 
     <ImageView
@@ -75,6 +81,7 @@
         android:layout_width="35dp"
         android:layout_height="38dp"
         android:layout_below="@+id/ivPic"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/ivComment"
         app:srcCompat="@drawable/ufi_new_direct" />
 
@@ -84,12 +91,13 @@
         android:layout_height="49dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/ivPic"
+        android:layout_marginTop="5dp"
         app:srcCompat="@drawable/ufi_save" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="121dp"
-        android:layout_height="54dp"
+        android:layout_width="65dp"
+        android:layout_height="43dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/three_dots" />

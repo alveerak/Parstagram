@@ -74,10 +74,8 @@ public class HomeFragment extends Fragment {
 
     public void loadTopPosts() {
         final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser().addAscendingOrder("createdAt");
 
-
-        postsQuery.getQuery(Post.class).findInBackground(new FindCallback<Post>() {
+        postsQuery.getQuery(Post.class).orderByAscending("createdAt").findInBackground(new FindCallback<Post>() {
 
             @Override
             public void done(List<Post> objects, ParseException e) {

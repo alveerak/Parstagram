@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +113,6 @@ public class PostDetailsFragment extends Fragment {
                         .load(post.getImage().getUrl())
                         .into(image);
 
-                Log.d("PostDetailsActivity", "reached");
                 try {
                     ParseFile profilePic = post.getUser().fetchIfNeeded().getParseFile("profPic");
                     if (profilePic != null) {
@@ -124,7 +122,7 @@ public class PostDetailsFragment extends Fragment {
                                 //.transform(new RoundedCornersTransformation(75, 0))
                                 .into(detailsProfPic);
                     }
-                    Log.d("PostDetailsActivity", "reached again");
+
                     postComment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -134,12 +132,15 @@ public class PostDetailsFragment extends Fragment {
                             post.saveInBackground();
                             typeComment.setText("");
 
+                            ((InstaActivity) context).goToDetails(post);
                         }
                     });
 
                     commentList.clear();
                     commentList.addAll(post.getList("comments"));
                     cAdapter.notifyDataSetChanged();
+
+
 
                 } catch (ParseException e1) {
                     e1.printStackTrace();
