@@ -165,8 +165,8 @@ public class PicFragment extends Fragment {
         createButton.setVisibility(View.INVISIBLE);
         Toast.makeText(getContext(), "POSTED SUCCESSFULLY!", Toast.LENGTH_LONG).show();
 
-        //pAdapter.notifyItemInserted(0);
-        pAdapter.notifyItemInserted(posts.size() - 1);
+        pAdapter.notifyItemInserted(0);
+        //pAdapter.notifyItemInserted(posts.size() - 1);
     }
 
     @Override

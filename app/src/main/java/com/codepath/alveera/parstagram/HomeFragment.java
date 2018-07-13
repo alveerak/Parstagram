@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
 
     public void loadTopPosts() {
         final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser();
+        postsQuery.getTop().withUser().addAscendingOrder("createdAt");
 
 
         postsQuery.getQuery(Post.class).findInBackground(new FindCallback<Post>() {
@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
                                     "\nusername = " + objects.get(i).getUser().fetchIfNeeded().getUsername());
                             posts.add(0, objects.get(i));
                             //pAdapter.notifyItemInserted(0);
-                            pAdapter.notifyItemInserted(posts.size() - 1);
+                            pAdapter.notifyItemInserted(0);
 
                         } catch (ParseException e1) {
                             e1.printStackTrace();

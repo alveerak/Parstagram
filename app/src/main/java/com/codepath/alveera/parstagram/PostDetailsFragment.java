@@ -3,10 +3,14 @@ package com.codepath.alveera.parstagram;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +18,11 @@ import com.codepath.alveera.parstagram.model.GlideApp;
 import com.codepath.alveera.parstagram.model.Post;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PostDetailsFragment extends Fragment {
@@ -32,8 +41,15 @@ public class PostDetailsFragment extends Fragment {
     public ImageView image;
     public TextView timeElapsed;
     public TextView username;
+    public ImageView detailsProfPic;
     Context context;
     public Button back;
+
+    public EditText typeComment;
+    public Button postComment;
+    public CommentAdapter cAdapter;
+    public RecyclerView rvComments;
+    public List<Object> commentList;
 
     public PostDetailsFragment() {
 
@@ -63,6 +79,18 @@ public class PostDetailsFragment extends Fragment {
         timeElapsed = (TextView) view.findViewById(R.id.tvPostTimeStamp);
         username = (TextView) view.findViewById(R.id.tvPostUsername);
         back = (Button) view.findViewById(R.id.back_btn);
+        detailsProfPic = (ImageView) view.findViewById(R.id.details_prof_pic);
+
+        typeComment = (EditText) view.findViewById(R.id.et_comment);
+        postComment = (Button) view.findViewById(R.id.submit_comment);
+
+        rvComments = (RecyclerView) view.findViewById(R.id.rvComments);
+
+        rvComments.setLayoutManager(new LinearLayoutManager(getContext()));
+        commentList = new ArrayList<>();
+        cAdapter = new CommentAdapter(commentList);
+        rvComments.setAdapter(cAdapter);
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +106,44 @@ public class PostDetailsFragment extends Fragment {
         postsQuery.getQuery(Post.class).getInBackground(id, new GetCallback<Post>() {
 
             @Override
-            public void done(Post post, ParseException e) {
+            public void done(final Post post, ParseException e) {
+
 
                 description.setText(post.getDescription());
                 GlideApp.with(context)
                         .load(post.getImage().getUrl())
                         .into(image);
+
+                Log.d("PostDetailsActivity", "reached");
+                try {
+                    ParseFile profilePic = post.getUser().fetchIfNeeded().getParseFile("profPic");
+                    if (profilePic != null) {
+                        GlideApp.with(context)
+                                .load(profilePic.getUrl())
+                                .circleCrop()
+                                //.transform(new RoundedCornersTransformation(75, 0))
+                                .into(detailsProfPic);
+                    }
+                    Log.d("PostDetailsActivity", "reached again");
+                    postComment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String initialComment = ParseUser.getCurrentUser().getObjectId() +
+                                    " " + typeComment.getText();
+                            post.add("comments", initialComment);
+                            post.saveInBackground();
+                            typeComment.setText("");
+
+                        }
+                    });
+
+                    commentList.clear();
+                    commentList.addAll(post.getList("comments"));
+                    cAdapter.notifyDataSetChanged();
+
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
                 timeElapsed.setText(post.getRelativeTimeAgo());
                 try {
                     username.setText(post.getUser().fetchIfNeeded().getUsername());
@@ -93,6 +153,7 @@ public class PostDetailsFragment extends Fragment {
 
             }
         });
+
     }
 
     @Override

@@ -11,6 +11,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
+
 @ParseClassName("Post")
 public class Post extends ParseObject{
     private static final String KEY_DESCRIPTION = "description";
@@ -60,6 +62,7 @@ public class Post extends ParseObject{
         post.setImage(image);
         post.setDescription(description);
         post.setUser(author);
+        post.put("comments", new ArrayList<String>());
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

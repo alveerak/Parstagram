@@ -57,7 +57,16 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
 
         GlideApp.with(context)
                 .load(post.getImage().getUrl())
+
+                //.transform(new CropSquareTransformation(75, 10))
                 .into(holder.image);
+
+        if (user.getParseFile("profPic") != null) {
+            GlideApp.with(context)
+                    .load(user.getParseFile("profPic").getUrl())
+                    .circleCrop()
+                    .into(holder.postProfPic);
+        }
 
         // populate the views according to this data
 //        holder.tvUsername.setText(post.user.name);
@@ -142,6 +151,7 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         public ImageView image;
         public TextView timeElapsed;
         public TextView username;
+        public ImageView postProfPic;
 
 
 
@@ -166,6 +176,7 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
             image = (ImageView) itemView.findViewById(R.id.ivPic);
             timeElapsed = (TextView) itemView.findViewById(R.id.tvTimeStamp);
             username = (TextView) itemView.findViewById(R.id.tvUsername);
+            postProfPic = (ImageView) itemView.findViewById(R.id.iv_post_prof_pic);
             itemView.setOnClickListener(this);
         }
 

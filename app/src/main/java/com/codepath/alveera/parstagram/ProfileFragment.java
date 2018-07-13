@@ -1,19 +1,43 @@
 package com.codepath.alveera.parstagram;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.codepath.alveera.parstagram.model.GlideApp;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class ProfileFragment extends Fragment {
-    Button logout;
+    private Button logout;
+    private Button takePic;
+    private Button submitPic;
+    private ImageView profThumbnail;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int RESULT_OK = 1;
+    private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    private File photoFile;
+    private String imagePath = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,6 +48,23 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         logout = (Button) view.findViewById(R.id.logout_btn);
+        takePic = (Button) view.findViewById(R.id.take_prof_pic_btn);
+        submitPic = (Button) view.findViewById(R.id.upload_prof_pic_btn);
+        profThumbnail = (ImageView) view.findViewById(R.id.iv_prof_pic) ;
+
+        ParseFile profilePic = null;
+        try {
+            profilePic = ParseUser.getCurrentUser().fetchIfNeeded().getParseFile("profPic");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (profilePic != null) {
+            GlideApp.with(this)
+                    .load(profilePic.getUrl())
+                    //.transform(new RoundedCornersTransformation(75, 0))
+                    .into(profThumbnail);
+        }
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,6 +75,86 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        submitPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ParseUser user = ParseUser.getCurrentUser();
+
+                //photoFile = new File(imagePath);
+                final ParseFile parseFile = new ParseFile(photoFile);
+
+                uploadProfilePic(parseFile, user);
+
+            }
+        });
+
+        takePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create Intent to take a picture and return control to the calling application
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                File media;
+                //String imagePath;
+                try{
+                    String time = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date());
+                    File directory = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    //String name =
+                    media = File.createTempFile("IMG"+time, ".jpg", directory);
+                    imagePath = media.getAbsolutePath();
+                    Uri fileProvider = FileProvider.getUriForFile(getActivity(), "com.example.alveera.parstagram", media);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+                    // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+                    // So as long as the result is not null, it's safe to use the intent.
+                    if (intent.resolveActivity(ProfileFragment.this.getActivity().getPackageManager()) != null) {
+                        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+    private void uploadProfilePic(ParseFile imageFile, ParseUser imageUser) {
+        imageUser.put("profPic", imageFile);
+        imageUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("HomeActivity", "Create post success");
+                }
+                else {
+                    e.printStackTrace();
+                }
+            }
+        });
+        profThumbnail.setVisibility(View.INVISIBLE);
+        takePic.setVisibility(View.VISIBLE);
+        submitPic.setVisibility(View.INVISIBLE);
+        Toast.makeText(getContext(), "Uploaded SUCCESSFULLY!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == -1) {
+                photoFile = new File(imagePath);
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                // RESIZE BITMAP, see section below
+                // Load the taken image into a preview
+                profThumbnail.setImageBitmap(takenImage);
+
+                profThumbnail.setVisibility(View.VISIBLE);
+                takePic.setVisibility(View.INVISIBLE);
+                submitPic.setVisibility(View.VISIBLE);
+            } else { // Result was a failure
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }
