@@ -9,15 +9,22 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.alveera.parstagram.model.GlideApp;
+import com.codepath.alveera.parstagram.model.Post;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -25,10 +32,15 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
+    ArrayList<Post> profPosts;
+    ProfileAdapter profPostAdapter;
+    public RecyclerView rvProfile;
     private Button logout;
     private Button takePic;
     private Button submitPic;
@@ -38,6 +50,11 @@ public class ProfileFragment extends Fragment {
     private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     private File photoFile;
     private String imagePath = "";
+    private TextView tvBio;
+    private TextView tvProfUsername;
+    private Button updateBio;
+    private EditText typeBio;
+    private ProgressBar pb;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,10 +64,38 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        // on some click or some loading we need to wait for...
+        pb = (ProgressBar) view.findViewById(R.id.pbLoadingProfile);
+        profPosts = new ArrayList<>();
+        profPostAdapter = new ProfileAdapter(profPosts);
+        rvProfile = (RecyclerView) view.findViewById(R.id.rvProfile);
+
+        // Define 2 column grid layout
+        final GridLayoutManager layout = new GridLayoutManager(getContext(), 3);
+
+
+        rvProfile.setLayoutManager(layout);
+
+        //rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvProfile.setAdapter(profPostAdapter);
+
+
+
+        loadTopProfPosts();
+
+        tvProfUsername = (TextView) view.findViewById(R.id.tvProfileUsername);
+        tvBio = (TextView) view.findViewById(R.id.details_description);
+        updateBio = (Button)view.findViewById(R.id.updateBio);
+        typeBio = (EditText) view.findViewById(R.id.type_bio);
+
+
         logout = (Button) view.findViewById(R.id.logout_btn);
         takePic = (Button) view.findViewById(R.id.take_prof_pic_btn);
         submitPic = (Button) view.findViewById(R.id.upload_prof_pic_btn);
         profThumbnail = (ImageView) view.findViewById(R.id.iv_prof_pic) ;
+
+        tvProfUsername.setText(ParseUser.getCurrentUser().getUsername());
+        tvBio.setText(ParseUser.getCurrentUser().getString("bio"));
 
         ParseFile profilePic = null;
         try {
@@ -61,10 +106,20 @@ public class ProfileFragment extends Fragment {
         if (profilePic != null) {
             GlideApp.with(this)
                     .load(profilePic.getUrl())
+                    .circleCrop()
                     //.transform(new RoundedCornersTransformation(75, 0))
                     .into(profThumbnail);
         }
 
+        updateBio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseUser.getCurrentUser().put("bio", typeBio.getText().toString());
+                ParseUser.getCurrentUser().saveInBackground();
+                typeBio.setText("");
+                tvBio.setText(ParseUser.getCurrentUser().getString("bio"));
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,6 +210,41 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void loadTopProfPosts() {
+        final Post.Query postsQuery = new Post.Query();
+
+        postsQuery.getQuery(Post.class).orderByAscending("createdAt").findInBackground(new FindCallback<Post>() {
+
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if (e == null) {
+                    Post post = new Post();
+                    pb.setVisibility(ProgressBar.VISIBLE);
+                    for (int i = 0; i < objects.size(); ++i) {
+                        ParseUser p = objects.get(i).getUser();
+                        try {
+                            Log.d("InstaActivity", "Pose[" + i + "] = " +
+                                    objects.get(i).getDescription() +
+                                    "\nusername = " + objects.get(i).getUser().fetchIfNeeded().getUsername());
+                            if (objects.get(i).getUser().fetchIfNeeded().getUsername().equals(ParseUser.getCurrentUser().getUsername())) {
+                                profPosts.add(0, objects.get(i));
+                                //pAdapter.notifyItemInserted(0);
+                                profPostAdapter.notifyItemInserted(0);
+                            }
+
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+
+                    }
+                    pb.setVisibility(ProgressBar.INVISIBLE);
+                }else {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

@@ -73,7 +73,7 @@ public class PostDetailsFragment extends Fragment {
 //            ptReplyTweet = (EditText) itemView.findViewById(R.id.ptReplyTweet);
 //            ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
 //            itemView.setOnClickListener(this);
-        description = (TextView) view.findViewById(R.id.tvPostDescription);
+        description = (TextView) view.findViewById(R.id.details_description);
         image = (ImageView) view.findViewById(R.id.ivPostPic);
         timeElapsed = (TextView) view.findViewById(R.id.tvPostTimeStamp);
         username = (TextView) view.findViewById(R.id.tvPostUsername);

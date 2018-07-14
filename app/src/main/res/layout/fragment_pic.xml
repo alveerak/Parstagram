@@ -14,6 +14,15 @@
         tools:context=".LoginActivity">
         <!-- TODO: Update blank fragment layout -->
 
+        <ProgressBar
+            android:id="@+id/pbLoadingPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            tools:layout_editor_absoluteX="181dp"
+            tools:layout_editor_absoluteY="305dp" />
+
         <EditText
             android:id="@+id/description_et"
             android:layout_width="wrap_content"
@@ -35,14 +44,14 @@
             android:text="Post"
             android:visibility="invisible" />
 
-        <Button
+        <ImageButton
             android:id="@+id/cam_btn"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="187dp"
+            android:layout_height="146dp"
             android:layout_below="@+id/description_et"
             android:layout_centerHorizontal="true"
-            android:text="take pic"
-            android:visibility="visible " />
+            android:src="@drawable/cam"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/ivPreview"

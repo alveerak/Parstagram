@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.codepath.alveera.parstagram.model.Post;
@@ -36,9 +38,10 @@ public class PicFragment extends Fragment {
     private static final String imagePathTest = "/storage/emulated/0/DCIM/Camera/IMG_20180710_130908.jpg";
     private EditText descriptionInput;
     private Button createButton;
-    private Button camButton;
+    private ImageButton camButton;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int RESULT_OK = 1;
+    private ProgressBar pb;
 
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -51,9 +54,10 @@ public class PicFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        pb = (ProgressBar) getActivity().findViewById(R.id.pbLoadingPic);
         descriptionInput = (EditText) view.findViewById(R.id.description_et);
         createButton = (Button) view.findViewById(R.id.create_btn);
-        camButton = (Button) view.findViewById(R.id.cam_btn);
+        camButton = (ImageButton) view.findViewById(R.id.cam_btn);
         ivPreview = (ImageView) view.findViewById(R.id.ivPreview);
         camButton.setVisibility(View.VISIBLE);
 
@@ -155,6 +159,7 @@ public class PicFragment extends Fragment {
     }
 
     private void createPost(String description, ParseFile imageFile, ParseUser imageUser) {
+        pb.setVisibility(ProgressBar.VISIBLE);
         Post newPost = Post.newInstance(imageUser, imageFile, description);
         ivPreview.setVisibility(View.INVISIBLE);
         camButton.setVisibility(View.VISIBLE);
@@ -167,6 +172,7 @@ public class PicFragment extends Fragment {
 
         pAdapter.notifyItemInserted(0);
         //pAdapter.notifyItemInserted(posts.size() - 1);
+        pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     @Override

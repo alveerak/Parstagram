@@ -8,37 +8,97 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ProgressBar
+        android:id="@+id/pbLoadingProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="139dp"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="305dp" />
     <Button
         android:id="@+id/logout_btn"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:text="logout" />
 
     <Button
         android:id="@+id/take_prof_pic_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iv_prof_pic"
+        android:layout_marginStart="13dp"
         android:text="Take pic" />
 
     <Button
         android:id="@+id/upload_prof_pic_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/take_prof_pic_btn"
-        android:layout_centerHorizontal="true"
         android:text="upload pic"
         android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/iv_prof_pic"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@+id/upload_prof_pic_btn"
-        android:layout_centerHorizontal="true"
+        android:layout_width="109dp"
+        android:layout_height="103dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/instagram_user_outline_24" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvProfile"
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tvProfileUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/iv_prof_pic"
+        android:fontFamily="sans-serif"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/details_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvProfileUsername"
+        android:layout_below="@+id/tvProfileUsername"
+        android:maxWidth="100dp"
+        android:text="TextView"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/updateBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/take_prof_pic_btn"
+        android:layout_toEndOf="@+id/upload_prof_pic_btn"
+        android:text="update bio" />
+
+    <EditText
+        android:id="@+id/type_bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/take_prof_pic_btn"
+        android:layout_toEndOf="@+id/iv_prof_pic"
+        android:ems="10"
+        android:hint="Update bio here..."
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

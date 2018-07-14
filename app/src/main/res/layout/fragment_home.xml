@@ -13,6 +13,15 @@
 
 
     </RelativeLayout>-->
+    <ProgressBar
+        android:id="@+id/pbLoadingHome"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="305dp" />
+
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"

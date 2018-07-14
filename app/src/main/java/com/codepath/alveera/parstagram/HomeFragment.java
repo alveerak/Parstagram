@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.codepath.alveera.parstagram.model.Post;
 import com.parse.FindCallback;
@@ -24,16 +25,20 @@ public class HomeFragment extends Fragment {
     InstaAdapter pAdapter;
     private SwipeRefreshLayout swipeContainer;
     public RecyclerView rvPosts;
+    private ProgressBar pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        // on some click or some loading we need to wait for...
+        pb = (ProgressBar) view.findViewById(R.id.pbLoadingHome);
         posts = new ArrayList<>();
         pAdapter = new InstaAdapter(posts);
         rvPosts = (RecyclerView) view.findViewById(R.id.rvPosts);
@@ -41,7 +46,7 @@ public class HomeFragment extends Fragment {
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         rvPosts.setAdapter(pAdapter);
 
-        loadTopPosts();
+
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -61,11 +66,10 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-
+        loadTopPosts();
     }
 
     public void fetchTimelineAsync(int page) {
-
         pAdapter.clear();
         loadTopPosts();
         swipeContainer.setRefreshing(false);
@@ -73,6 +77,9 @@ public class HomeFragment extends Fragment {
     }
 
     public void loadTopPosts() {
+
+
+
         final Post.Query postsQuery = new Post.Query();
 
         postsQuery.getQuery(Post.class).orderByAscending("createdAt").findInBackground(new FindCallback<Post>() {
@@ -81,6 +88,7 @@ public class HomeFragment extends Fragment {
             public void done(List<Post> objects, ParseException e) {
                 if (e == null) {
                     Post post = new Post();
+                    pb.setVisibility(ProgressBar.VISIBLE);
                     for (int i = 0; i < objects.size(); ++i) {
                         ParseUser p = objects.get(i).getUser();
                         try {
@@ -90,6 +98,8 @@ public class HomeFragment extends Fragment {
                             posts.add(0, objects.get(i));
                             //pAdapter.notifyItemInserted(0);
                             pAdapter.notifyItemInserted(0);
+
+                            pb.setVisibility(ProgressBar.INVISIBLE);
 
                         } catch (ParseException e1) {
                             e1.printStackTrace();
@@ -101,7 +111,13 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
+        // run a background job and once complete
+
     }
+
+
+
 
 
 }

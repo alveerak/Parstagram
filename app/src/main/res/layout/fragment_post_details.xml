@@ -9,18 +9,19 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/tvPostDescription"
+        android:id="@+id/details_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ivDetailsShare"
         android:text="TextView"
+        android:textColor="#645f5f"
         android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/ivPostPic"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/details_prof_pic"
         android:src="@color/deep_purple_500" />
@@ -44,15 +45,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvPostDescription"
+        android:layout_below="@+id/details_description"
         android:text="TextView" />
 
     <Button
         android:id="@+id/back_btn"
-        android:layout_width="75dp"
+        android:layout_width="67dp"
         android:layout_height="38dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvPostTimeStamp"
         android:text="BACK" />
 
     <ImageView
@@ -75,19 +76,19 @@
 
     <ImageView
         android:id="@+id/ivDetailsComment"
-        android:layout_width="30dp"
+        android:layout_width="38dp"
         android:layout_height="33dp"
-        android:layout_alignEnd="@+id/tvPostTimeStamp"
-        android:layout_below="@+id/ivPostPic"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/ivDetailsFavorite"
+        android:layout_marginStart="30dp"
         app:srcCompat="@drawable/ufi_comment" />
 
     <ImageView
         android:id="@+id/ivDetailsShare"
         android:layout_width="35dp"
         android:layout_height="38dp"
-        android:layout_below="@+id/ivPostPic"
-        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/ivDetailsFavorite"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/tvPostTimeStamp"
         app:srcCompat="@drawable/ufi_new_direct" />
 
@@ -102,27 +103,28 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvComments"
         android:layout_width="match_parent"
-        android:layout_height="121dp"
+        android:layout_height="95dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/submit_comment" />
+        android:layout_below="@+id/et_comment" />
 
     <EditText
         android:id="@+id/et_comment"
-        android:layout_width="131dp"
+        android:layout_width="272dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvPostTimeStamp"
         android:ems="10"
+        android:hint="Add a comment.."
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:textSize="10sp" />
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/submit_comment"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_comment"
+        android:layout_width="66dp"
+        android:layout_height="38dp"
+        android:layout_below="@+id/tvPostTimeStamp"
+        android:layout_toStartOf="@+id/back_btn"
         android:text="post" />
 
 </RelativeLayout>
