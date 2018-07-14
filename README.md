@@ -2,7 +2,7 @@
 
 **Parstagram** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **31** hours spent in total
 
 ## User Stories
 
@@ -23,12 +23,12 @@ The following **optional** features are implemented:
 - [x] User should switch between different tabs - viewing all posts (feed view), capture (camera and photo gallery view) and profile tabs (posts made) using a Bottom Navigation View.
 - [ ] User can load more posts once he or she reaches the bottom of the feed using infinite scrolling.
 - [x] Show the username and creation time for each post
-- [ ] After the user submits a new post, show an indeterminate progress bar while the post is being uploaded to Parse
+- [x] After the user submits a new post, show an indeterminate progress bar while the post is being uploaded to Parse
 - User Profiles:
-   - [ ] Allow the logged in user to add a profile photo
-   - [ ] Display the profile photo with each post
+   - [x] Allow the logged in user to add a profile photo
+   - [x] Display the profile photo with each post
    - [ ] Tapping on a post's username or profile photo goes to that user's profile page
-- [ ] User can comment on a post and see all comments for each post in the post details screen.
+- [x] User can comment on a post and see all comments for each post in the post details screen.
 - [ ] User can like a post and see number of likes for each post in the post details screen.
 - [ ] Create a custom Camera View on your phone.
 - [x] Run your app on your phone and use the camera to take the photo
@@ -36,18 +36,21 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] Added a bio and ability to update bio
+- [x] Added profile page for user where they can view thumbnails of all the posts they have ever uploaded in grid layout recycler view
+- [x] Added recycler view for comments
+- [x] Profile picture and username of the commenter is in every comment
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
 1. How to switch between fragments more efficiently.
-2. How to implement likes (adding to Post class) and comments (recycler view within recycler view)
+2. I would love to learn how to implement likes (adding to Post class). This might be more complex than a simple counter because we have to make sure a person doesn't like the same post twice. This means we have to save which users have liked a post, and create an unlike feature as well.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![alt tag](./Instagif11.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
