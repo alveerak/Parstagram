@@ -61,8 +61,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         return mPosts.size();
     }
 
-
-
     // create a ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageView image;

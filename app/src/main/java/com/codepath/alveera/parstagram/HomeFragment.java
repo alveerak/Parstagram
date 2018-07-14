@@ -111,9 +111,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
-        // run a background job and once complete
-
     }
 
 

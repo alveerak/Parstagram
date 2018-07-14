@@ -55,6 +55,7 @@ public class ProfileFragment extends Fragment {
     private Button updateBio;
     private EditText typeBio;
     private ProgressBar pb;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,14 +73,9 @@ public class ProfileFragment extends Fragment {
 
         // Define 2 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 3);
-
-
         rvProfile.setLayoutManager(layout);
 
-        //rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
         rvProfile.setAdapter(profPostAdapter);
-
-
 
         loadTopProfPosts();
 
@@ -93,7 +89,6 @@ public class ProfileFragment extends Fragment {
         takePic = (Button) view.findViewById(R.id.take_prof_pic_btn);
         submitPic = (Button) view.findViewById(R.id.upload_prof_pic_btn);
         profThumbnail = (ImageView) view.findViewById(R.id.iv_prof_pic) ;
-
         tvProfUsername.setText(ParseUser.getCurrentUser().getUsername());
         tvBio.setText(ParseUser.getCurrentUser().getString("bio"));
 
@@ -103,6 +98,7 @@ public class ProfileFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         if (profilePic != null) {
             GlideApp.with(this)
                     .load(profilePic.getUrl())
@@ -120,6 +116,7 @@ public class ProfileFragment extends Fragment {
                 tvBio.setText(ParseUser.getCurrentUser().getString("bio"));
             }
         });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

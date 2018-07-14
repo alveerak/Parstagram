@@ -25,17 +25,6 @@ import java.util.List;
 
 
 public class PostDetailsFragment extends Fragment {
-    //        public ImageView ivProfileImage;
-//        public TextView tvUsername;
-//        public TextView tvBody;
-//        public TextView tvTimeElapsed;
-//        public TextView tvHandle;
-//        public ImageView ivRetweetsImage;
-//        public TextView tvNumRetweets;
-//        public ImageView ivFavoritesImage;
-//        public TextView tvNumFavorites;
-//        public EditText ptReplyTweet;
-//        public ImageButton ibReply;
     public TextView description;
     public ImageView image;
     public TextView timeElapsed;
@@ -60,19 +49,6 @@ public class PostDetailsFragment extends Fragment {
 
         context = getContext();
         // perform findViewById
-
-//            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-//            tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
-//            tvBody = (TextView) itemView.findViewById(R.id.tvBody);
-//            tvTimeElapsed = (TextView) itemView.findViewById(R.id.tvTimeElapsed);
-//            tvHandle = (TextView) itemView.findViewById(R.id.tvHandle);
-//            ivRetweetsImage = (ImageView) itemView.findViewById(R.id.ivRetweetsImage);
-//            tvNumRetweets = (TextView) itemView.findViewById(R.id.tvNumRetweets);
-//            ivFavoritesImage = (ImageView) itemView.findViewById(R.id.ivFavoritesImage);
-//            tvNumFavorites = (TextView) itemView.findViewById(R.id.tvNumFavorites);
-//            ptReplyTweet = (EditText) itemView.findViewById(R.id.ptReplyTweet);
-//            ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
-//            itemView.setOnClickListener(this);
         description = (TextView) view.findViewById(R.id.details_description);
         image = (ImageView) view.findViewById(R.id.ivPostPic);
         timeElapsed = (TextView) view.findViewById(R.id.tvPostTimeStamp);

@@ -43,13 +43,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return viewHolder;
     }
 
-    interface Handler{
-        void onClick(Post tweet, Context context);
-    }
-
-
     // bind the values based on the position of the element
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         String commentString = (String) mComments.get(position);
@@ -63,20 +57,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 for (int i = 0; i < objects.size(); i++) {
                     user = objects.get(i);
                     holder.tvComment.setText(commentArray[1]);
-                    //try {
-                        ParseFile profilePic = user.getParseFile("profPic");
-                        if (profilePic != null) {
-                            GlideApp.with(context)
-                                    .load(profilePic.getUrl())
-                                    .circleCrop()
-                                    //.transform(new RoundedCornersTransformation(75, 0))
-                                    .into(holder.commentProfPic);
+                    ParseFile profilePic = user.getParseFile("profPic");
+                    if (profilePic != null) {
+                        GlideApp.with(context)
+                                .load(profilePic.getUrl())
+                                .circleCrop()
+                                .into(holder.commentProfPic);
                         }
-                       // Log.d("PostDetailsActivity", "reached again");
-
-//                    } catch (ParseException e1) {
-//                        e1.printStackTrace();
-//                    }
                 }
             }
         });
@@ -95,13 +82,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         public ImageView commentProfPic;
         public TextView tvComment;
 
-
-
         public ViewHolder(View itemView) {
             super(itemView);
             commentProfPic = (ImageView) itemView.findViewById(R.id.comment_pic);
             tvComment = (TextView) itemView.findViewById(R.id.tv_comment);
-
         }
     }
 

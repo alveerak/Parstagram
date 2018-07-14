@@ -69,8 +69,6 @@ public class PicFragment extends Fragment {
             public void onClick(View view) {
                 final String description = descriptionInput.getText().toString();
                 final ParseUser user = ParseUser.getCurrentUser();
-
-                //photoFile = new File(imagePath);
                 final ParseFile parseFile = new ParseFile(photoFile);
 
                 createPost(description, parseFile, user);

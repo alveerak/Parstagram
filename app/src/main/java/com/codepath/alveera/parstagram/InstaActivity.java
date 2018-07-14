@@ -8,14 +8,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.codepath.alveera.parstagram.model.Post;
 
 public class InstaActivity extends AppCompatActivity {
-
-    private TextView mTextMessage;
-    //Fragment currentFragment = null;
     HomeFragment homeFrag;
     ProfileFragment profFrag;
     PicFragment picFrag;
@@ -34,24 +30,18 @@ public class InstaActivity extends AppCompatActivity {
                     ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.my_fragment, frag);
                     ft.commit();
-
-                    //FragmentManager manager = getSupportFragmentManager();
-                    //manager.beginTransaction().replace(R.id.fragment_home, new HomeFragment()).commit();
-                    // mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
                     frag = picFrag;
                     ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.my_fragment, frag);
                     ft.commit();
-                    //mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
                     frag = profFrag;
                     ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.my_fragment, frag);
                     ft.commit();
-                    //mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
             return false;
@@ -72,7 +62,6 @@ public class InstaActivity extends AppCompatActivity {
         ft.replace(R.id.my_fragment, frag);
         ft.commit();
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }

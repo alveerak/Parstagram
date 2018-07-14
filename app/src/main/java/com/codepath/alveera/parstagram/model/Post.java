@@ -18,15 +18,6 @@ public class Post extends ParseObject{
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
-    private static final String KEY_TIME = "createdAt";
-    // list out the attributes
-    public String body;
-    public long uid; // database ID for the tweet
-    public User user;
-    public String createdAt;
-    public String handle;
-    public String retweet_count;
-    public String favorites_count;
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
